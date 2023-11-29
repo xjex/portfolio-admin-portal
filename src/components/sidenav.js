@@ -27,7 +27,6 @@ const SideNav = () => {
         href="/admin"
         className="flex flex-row space-x-1 items-center hover:bg-white/10 p-4 rounded-full duration-200"
       >
-        <img src="https://github.com/xjex/portfolio/blob/main/src/assets/Title-logo.png?raw=true" />
         Logo
       </Link>
 

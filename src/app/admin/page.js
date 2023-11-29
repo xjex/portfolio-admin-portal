@@ -3,29 +3,15 @@ import { React, useEffect, useState } from "react";
 import supabase from "../../components/lib/supabaseClient";
 
 import SideNav from "@/components/sidenav";
-
 import { Icon } from "@iconify/react";
 import Link from "next/link";
+import Loading from "@/components/loading-component/loading";
+
+import isUser from "@/components/hook/isUser";
 const page = () => {
   const [isLogged, setLoginStatus] = useState(null);
-
-  useEffect(() => {
-    checkUser();
-  }, []);
-
-  //create a use effect if user is authenticated
-  const checkUser = async () => {
-    const user = supabase.auth.getUser().then((data) => {
-      const getData = data.data;
-
-      if (getData.user === null) {
-        window.location.href = "/login";
-        setLoginStatus(null);
-      } else {
-        setLoginStatus(true);
-      }
-    });
-  };
+  const { isProfileActive } = isUser();
+  console.log(isProfileActive);
 
   const signOut = async () => {
     const { error } = await supabase.auth.signOut();
@@ -40,10 +26,13 @@ const page = () => {
 
   return (
     <main className="my-24 text-center">
-      {isLogged ? (
+      {isProfileActive ? (
         <div>
           <SideNav />
-          <Link href="/admin/write-blog"> Write Blog </Link>
+          <button className="btn btn-primary">
+            {" "}
+            <Link href="/admin/write-blog"> Write Blog </Link>
+          </button>
           <div className="h-full">
             <button
               onClick={signOut}
@@ -54,14 +43,7 @@ const page = () => {
           </div>
         </div>
       ) : (
-        <div className="flex justify-center items-center  ">
-          <Icon
-            className="content-center"
-            icon="svg-spinners:gooey-balls-1"
-            width="100"
-            height="100"
-          />
-        </div>
+        <Loading />
       )}
     </main>
   );

@@ -7,6 +7,7 @@ export default function Home() {
   return (
     <main className="my-24 text-center">
       <SideNav />
+
       <h1 className="text-2xl">What to do? ✨</h1>
       <div className="flex gap-2 justify-center mt-12">
         <Link
