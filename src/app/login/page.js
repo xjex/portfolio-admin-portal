@@ -3,6 +3,7 @@ import { React, useState, useEffect } from "react";
 import supabase from "../../components/lib/supabaseClient";
 import isUser from "@/components/hook/isUser";
 import Loading from "@/components/loading-component/loading";
+import Link from "next/link";
 const login = () => {
   const { isProfileActive, setIsProfileActive } = isUser();
   //create a use effect if user is logged in
@@ -14,6 +15,7 @@ const login = () => {
   const checkUser = async () => {
     const user = supabase.auth.getUser().then((data) => {
       const getData = data.data;
+      console.log(getData.user, "gagaga");
       if (getData.user !== null) {
         console.log(isProfileActive, "gagaga");
         window.location.href = "/admin";
@@ -86,12 +88,11 @@ const login = () => {
                 Sign In
               </button>
 
-              <a
-                className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800"
-                href="#"
-              >
-                Forgot Password?
-              </a>
+              <Link href="/accounts/forget-password">
+                <button className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800">
+                  Forgot Password?
+                </button>
+              </Link>
             </div>
 
             <hr className="my-4" />
